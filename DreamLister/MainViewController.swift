@@ -21,21 +21,42 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         tableView.delegate = self
         tableView.dataSource = self
+        
+        //generateTestDate()
+        attempFetch()
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        if let sections = controller.sections {
+            return sections.count
+        }
+        return 0
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        if let sections = controller.sections {
+            let sectionInfo = sections[section]
+            return sectionInfo.numberOfObjects
+        }
+        return 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "Item Cell", for: indexPath) as? ItemCell {
+            configureCell(cell: cell, indexPath: indexPath)
             return cell
         }
         return UITableViewCell()
+    }
+    
+    func configureCell(cell: ItemCell, indexPath: IndexPath) {
+        let item = controller.object(at: indexPath)
+        cell.configureCell(item: item)
+        
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 160
     }
     
     func attempFetch() {
@@ -44,6 +65,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         fetchRequest.sortDescriptors = [dataSort]
         
         let controller = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
+        self.controller = controller
         do {
             try controller.performFetch()
         } catch let error as NSError {
@@ -74,7 +96,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         case .update:
             if let indexPath = indexPath {
                 let cell = tableView.cellForRow(at: indexPath) as! ItemCell
-                //update cell
+                configureCell(cell: cell, indexPath: indexPath)
             }
             break
         case .move:
@@ -86,6 +108,25 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
             }
             break
         }
+    }
+    
+    func generateTestDate() {
+        let item = Item(context: context)
+        item.title = "Macbook Pro 2018"
+        item.price = 1799
+        item.details = "I can't wait until the September event, I hope they release new MBPs."
+        
+        let item2 = Item(context: context)
+        item2.title = "Bose Headphones"
+        item2.price = 300
+        item2.details = "But man, its so nice to be able to block out everyone with the noise cancelling tech."
+        
+        let item3 = Item(context: context)
+        item3.title = "Tesla Model S"
+        item3.price = 110000
+        item3.details = "Oh man this is a beautiful car. And one day, I will own it"
+        
+        ad.saveContext()
     }
 
 }
