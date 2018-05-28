@@ -68,8 +68,17 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func attempFetch() {
         let fetchRequest: NSFetchRequest<Item> = Item.fetchRequest()
-        let dataSort = NSSortDescriptor(key: "createdAt", ascending: false)
-        fetchRequest.sortDescriptors = [dataSort]
+        let dateSort = NSSortDescriptor(key: "createdAt", ascending: false)
+        let priceSort = NSSortDescriptor(key: "price", ascending: true)
+        let titleSort = NSSortDescriptor(key: "title", ascending: true)
+        
+        if segment.selectedSegmentIndex == 0 {
+            fetchRequest.sortDescriptors = [dateSort]
+        } else if segment.selectedSegmentIndex == 1 {
+            fetchRequest.sortDescriptors = [priceSort]
+        } else if segment.selectedSegmentIndex == 2 {
+            fetchRequest.sortDescriptors = [titleSort]
+        }
         
         let controller = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
         
@@ -138,8 +147,14 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         ad.saveContext()
     }
+    
     @IBAction func addButtonPressed(_ sender: Any) {
         performSegue(withIdentifier: "Show Item Details", sender: nil)
+    }
+    
+    @IBAction func segmentChanged(_ sender: UISegmentedControl) {
+        attempFetch()
+        tableView.reloadData()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -150,6 +165,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
         destination.item = item
     }
+    
 
 }
 

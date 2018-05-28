@@ -33,6 +33,9 @@
                                     <segment title="Title"/>
                                 </segments>
                                 <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <action selector="segmentChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="TJd-yk-c1B"/>
+                                </connections>
                             </segmentedControl>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="160" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Vic-zT-0GY">
                                 <rect key="frame" x="16" y="128" width="343" height="539"/>
@@ -170,6 +173,16 @@
                                     <constraint firstAttribute="height" constant="120" id="zzv-yh-0F2"/>
                                 </constraints>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Va8-34-WAS">
+                                <rect key="frame" x="16" y="72.5" width="120" height="120"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="120" id="ll1-HN-IBO"/>
+                                    <constraint firstAttribute="height" constant="120" id="zda-kd-Evy"/>
+                                </constraints>
+                                <connections>
+                                    <action selector="addImageButtonPressed:" destination="CFz-7g-b9y" eventType="touchUpInside" id="Z34-yv-259"/>
+                                </connections>
+                            </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Title" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lcv-Ly-J0z" customClass="CustomTextField" customModule="DreamLister" customModuleProvider="target">
                                 <rect key="frame" x="146" y="88" width="213" height="40"/>
                                 <color key="backgroundColor" red="0.93333333330000001" green="0.93333333330000001" blue="0.93333333330000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -238,6 +251,7 @@
                             <constraint firstItem="zhp-D4-MB8" firstAttribute="trailing" secondItem="UtK-nj-aJ6" secondAttribute="trailingMargin" id="Dbw-Ku-qfC"/>
                             <constraint firstItem="17Y-8G-StX" firstAttribute="top" secondItem="erl-Q5-EdW" secondAttribute="bottom" id="PqH-Tb-PkZ"/>
                             <constraint firstItem="AxG-Zl-gZt" firstAttribute="leading" secondItem="UtK-nj-aJ6" secondAttribute="leadingMargin" id="Qp6-Bl-SVf"/>
+                            <constraint firstItem="Va8-34-WAS" firstAttribute="centerX" secondItem="vWH-cd-mI7" secondAttribute="centerX" id="Ru0-PC-Vyf"/>
                             <constraint firstAttribute="trailingMargin" secondItem="AxG-Zl-gZt" secondAttribute="trailing" id="SBo-Ml-ADW"/>
                             <constraint firstItem="22a-tt-A6b" firstAttribute="leading" secondItem="UtK-nj-aJ6" secondAttribute="leadingMargin" id="SH4-eg-aov"/>
                             <constraint firstItem="r0T-R5-er7" firstAttribute="leading" secondItem="vWH-cd-mI7" secondAttribute="trailing" constant="10" id="UQX-Nl-6R7"/>
@@ -246,6 +260,7 @@
                             <constraint firstItem="22a-tt-A6b" firstAttribute="trailing" secondItem="UtK-nj-aJ6" secondAttribute="trailingMargin" id="c9d-WA-XUI"/>
                             <constraint firstItem="erl-Q5-EdW" firstAttribute="leading" secondItem="UtK-nj-aJ6" secondAttribute="leading" id="cKf-AL-wGA"/>
                             <constraint firstItem="lcv-Ly-J0z" firstAttribute="trailing" secondItem="UtK-nj-aJ6" secondAttribute="trailingMargin" id="hIy-4N-SEn"/>
+                            <constraint firstItem="Va8-34-WAS" firstAttribute="centerY" secondItem="vWH-cd-mI7" secondAttribute="centerY" id="iGa-r8-VgX"/>
                             <constraint firstItem="vWH-cd-mI7" firstAttribute="top" secondItem="hgv-XD-8rv" secondAttribute="bottom" constant="8" id="j5p-Er-0LU"/>
                             <constraint firstItem="lcv-Ly-J0z" firstAttribute="top" secondItem="hgv-XD-8rv" secondAttribute="bottom" constant="24" id="nCp-E0-Nzh"/>
                             <constraint firstItem="r0T-R5-er7" firstAttribute="top" secondItem="lcv-Ly-J0z" secondAttribute="bottom" constant="10" id="sts-jc-UJV"/>
@@ -257,12 +272,17 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="trash" id="qd5-94-na1">
                             <color key="tintColor" red="1" green="0.34509803919999998" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <connections>
+                                <action selector="deleteButtonPressed:" destination="CFz-7g-b9y" id="dj1-hE-4Yd"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="deleteButton" destination="qd5-94-na1" id="giq-o5-iKG"/>
                         <outlet property="detailsTextField" destination="22a-tt-A6b" id="1nd-Ed-Mnd"/>
                         <outlet property="priceTextField" destination="r0T-R5-er7" id="EMo-B9-Yyh"/>
                         <outlet property="storePicker" destination="AxG-Zl-gZt" id="IbN-Bo-5Rp"/>
+                        <outlet property="thumbnailImage" destination="vWH-cd-mI7" id="MEf-sO-6dl"/>
                         <outlet property="titleTextField" destination="lcv-Ly-J0z" id="cNT-aF-6Hu"/>
                     </connections>
                 </viewController>
