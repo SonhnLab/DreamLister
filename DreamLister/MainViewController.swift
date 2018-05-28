@@ -49,6 +49,13 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         return UITableViewCell()
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let objects = controller.fetchedObjects, objects.count > 0 {
+            let item = objects[indexPath.row]
+            performSegue(withIdentifier: "Show Item Details", sender: item)
+        }
+    }
+    
     func configureCell(cell: ItemCell, indexPath: IndexPath) {
         let item = controller.object(at: indexPath)
         cell.configureCell(item: item)
@@ -65,6 +72,9 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         fetchRequest.sortDescriptors = [dataSort]
         
         let controller = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
+        
+        controller.delegate = self
+        
         self.controller = controller
         do {
             try controller.performFetch()
@@ -127,6 +137,18 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         item3.details = "Oh man this is a beautiful car. And one day, I will own it"
         
         ad.saveContext()
+    }
+    @IBAction func addButtonPressed(_ sender: Any) {
+        performSegue(withIdentifier: "Show Item Details", sender: nil)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard
+            let destination = segue.destination as? ItemDetailsViewController,
+            let item = sender as? Item else {
+                return
+        }
+        destination.item = item
     }
 
 }
